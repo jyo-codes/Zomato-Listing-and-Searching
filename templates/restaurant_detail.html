@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Restaurant Details</title>
+    <link rel="stylesheet" href="../static/css/styles.css">
+    <link rel="icon" type="image/x-icon" href="../static/images/favicon.ico" />
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f4;
+        }
+    
+        header {
+            background-color: #e23744;
+            color: white;
+            padding: 20px;
+            display: flex;
+            align-items: center;
+            position: relative;
+        }
+    
+        header img {
+            height: 50px; /* Adjust the height as needed */
+            margin-right: 20px; /* Space between logo and title */
+        }
+    
+        header h1 {
+            margin: 0;
+            flex: 1; /* Take remaining space */
+        }
+    
+        main {
+            padding: 20px;
+            max-width: 800px;
+            margin: auto;
+            background-color: white;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+    
+        h1, h2 {
+            color: #e23744;
+            display: inline;
+        }
+    
+        p {
+            font-size: 18px;
+            margin: 10px 0;
+        }
+    
+        .restaurant-detail {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+    
+        .restaurant-detail img {
+            width: 100%;
+            max-width: 600px;
+            border-radius: 10px;
+        }
+    
+        .restaurant-detail .info {
+            width: 100%;
+            text-align: left;
+        }
+    
+       
+    
+        a:hover {
+            text-decoration: underline;
+        }
+        a{
+            color: #e23744; /* Primary color */
+            text-decoration: none; /* Remove underline */
+            font-weight: bold;
+            display: inline-block;
+            margin: 10px 0;
+            padding: 10px;
+            border-radius: 5px;
+            border: 2px solid #e23744;
+            transition: all 0.3s ease;
+        }
+
+        a:hover {
+            background-color: #e23744; /* Background color on hover */
+            color: white; /* Text color on hover */
+            text-decoration: none; /* Ensure no underline */
+            border-color: #e23744; /* Border color on hover */
+        }
+
+        .url-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin-top: 20px;
+        }
+
+        .url-container a {
+            margin: 5px 0;
+            width: 80%; /* Adjust width as needed */
+            text-align: center; /* Center text */
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <img src="../static/images/logo.png" alt="Zomato Logo">
+        <h1>Restaurant Details</h1>
+    </header>
+    <script src="../static/js/details.js"></script>
+    <main>
+        <img id="restaurant-image" src="" alt="Restaurant Image"><br>
+        <h2 id="restaurant-name">No Name Available</h2>
+        <p id="restaurant-cuisines">Cuisines: Not Available</p>
+        <p id="restaurant-cost">Average Cost for Two: Not Available</p>
+        <p id="restaurant-address">Address: Not Available</p>
+        <p id="restaurant-rating">Rating: Not Available</p>
+        <div class="url-container">
+            <a id="restaurant-url" href="#" target="_blank">Visit Restaurant Page</a>
+            <a id="menu-url" href="#" target="_blank">View Menu</a>
+            <a id="events-url" href="#" target="_blank">View Events</a>
+            <a id="book-url" href="#" target="_blank">Book a Table</a>
+        </div>
+    </main>
+</body>
+</html>

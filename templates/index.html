@@ -1,0 +1,290 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="icon" type="image/x-icon" href="../static/images/favicon.ico" />
+    <title>Zomato</title>
+
+    <link rel="stylesheet" href="../static/css/index.css" type="text/css" />
+    <link rel="stylesheet" href="../static/css/nav.css" type="text/css" />
+    <link rel="stylesheet" href="../static/css/top.css" type="text/css" />
+    <link rel="stylesheet" href="../static/css/app.css" type="text/css" />
+    <link rel="stylesheet" href="../static/css/main.css" type="text/css" />
+    <link rel="stylesheet" href="../static/css/explore.css" type="text/css" />
+    <link rel="stylesheet" href="../static/css/footer.css" type="text/css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" />
+
+    <style>
+      .restaurant-card {
+          border: 1px solid #ddd;
+          border-radius: 8px;
+          padding: 20px;
+          margin: 10px;
+          box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+          width: calc(33.33% - 20px);
+          display: inline-block;
+          vertical-align: top;
+          transition: transform 0.3s ease, box-shadow 0.3s ease;
+      }
+
+      .restaurant-card:hover {
+          transform: translateY(-10px);
+          box-shadow: 0 8px 16px rgba(0,0,0,0.2);
+      }
+
+      .restaurant-card h3 {
+          margin-top: 0;
+          font-size: 1.2em; /* Increase font size for better readability */
+      }
+
+      .restaurant-card p {
+          margin: 8px 0;
+          font-size: 1em; /* Increase font size for better readability */
+      }
+
+      #restaurant-list {
+          display: flex;
+          flex-wrap: wrap;
+          justify-content: space-between;
+      }
+
+      #pagination-controls {
+        text-align: center;
+        margin: 20px 0;
+    }
+  
+    #pagination-controls button {
+        background-color: #e23744; /* Zomato color */
+        color: white;
+        border: none;
+        border-radius: 5px;
+        padding: 10px 20px;
+        font-size: 1em;
+        cursor: pointer;
+        transition: background-color 0.3s, box-shadow 0.3s;
+        margin: 0 10px;
+    }
+  
+    #pagination-controls button:disabled {
+        background-color: #ccc;
+        cursor: not-allowed;
+    }
+  
+    #pagination-controls button:hover {
+        background-color: #c72c3c; /* Darker shade for hover */
+        box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+    }
+  
+    #pagination-controls span {
+        font-size: 1.2em;
+        margin: 0 15px;
+        line-height: 32px; /* Align with button height */
+    }
+  </style>
+</head>
+<body>
+    <header>
+        <nav>
+            <div class="user-icon">
+                <i data-feather="user"></i>
+            </div>
+            <div class="left">
+                <div class="nav-item">
+                    <i data-feather="smartphone"></i>
+                    <a href="#">Get the app</a>
+                </div>
+            </div>
+            <div class="right">
+                <div class="nav-item">
+                    <a href="#">Investor Relations</a>
+                </div>
+                <div class="nav-item">
+                    <a href="#">Add restaurant</a>
+                </div>
+                <div class="nav-item">
+                    <a href="#">Log in</a>
+                </div>
+                <div class="nav-item">
+                    <a href="#">Sign up</a>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <main>
+        <img class="bg-image" src="https://i.pinimg.com/originals/6d/79/e6/6d79e62312ae92757667ca1dae5289d9.jpg" />
+        <div class="top">
+            <div class="center-content">
+                <img class="main-logo" src="../static/images/logo.png" alt="Zomato Logo" />
+                <h1>Discover the best food & drinks</h1>
+                <div class="search_container">
+                    <div class="location">
+                        <input placeholder="Enter Restaurant Id" class="location-input" id="restaurant-id" />
+                    </div>
+                    <div class="search">
+                        <div class="search_icon">
+                            <i data-feather="search" onclick="searchRestaurant()"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <section>
+        <div id="search-result">
+            <!-- Search result will be displayed here -->
+        </div>
+        <div id="restaurant-list">
+            <!-- Restaurant list will be displayed here -->
+        </div>
+        
+        <div id="pagination-controls">
+            <button onclick="fetchRestaurantList(currentPage - 1)" id="prev-button">Previous</button>
+            <span id="current-page"></span>
+            <button onclick="fetchRestaurantList(currentPage + 1)" id="next-button">Next</button>
+        </div>
+    </section>
+
+    <footer>
+        <div class="footer-data">
+            <section class="footer-top">
+                <img src="https://b.zmtcdn.com/web_assets/b40b97e677bc7b2ca77c58c61db266fe1603954218.png?fit=around|198:42&amp;crop=198:42;*,*" alt="Zomato logo" class="sc-elhb8j-1 ixsoFB" />
+                <div class="row">
+                    <div class="country-dropdown">
+                        <img src="../static/images/india.png" class="flag" />
+                        <p>India</p>
+                        <i class="fa fa-chevron-down"></i>
+                    </div>
+                    <div class="country-dropdown">
+                        <i data-feather="globe"></i>
+                        <p>English</p>
+                        <i class="fa fa-chevron-down"></i>
+                    </div>
+                </div>
+            </section>
+            <section class="middle row">
+                <div class="footer-links">
+                    <h6 class="footer-title">About Zomato</h6>
+                    <ul>
+                        <li>Who we are</li>
+                        <li>Blog</li>
+                        <li>Work with us</li>
+                        <li>Investor Relations</li>
+                        <li>Report Fraud</li>
+                        <li>Contact us</li>
+                    </ul>
+                </div>
+
+                <div class="footer-links">
+                    <h6 class="footer-title">Zomaverse</h6>
+                    <ul>
+                        <li>Zomato</li>
+                        <li>Blinkit</li>
+                        <li>Feeding India</li>
+                        <li>Hyperpure</li>
+                        <li>Zomaland</li>
+                    </ul>
+                </div>
+
+                <div class="footer-links column">
+                    <div class="footer-links">
+                        <h6 class="footer-title">For Restaurants</h6>
+                        <ul>
+                            <li>Partner With Us</li>
+                            <li>Apps for you</li>
+                        </ul>
+                    </div>
+
+                    <div class="footer-links">
+                        <h6 class="footer-title">For Enterprises</h6>
+                        <ul>
+                            <li>Zomato For Enterprises</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="footer-links">
+                    <h6 class="footer-title">Learn more</h6>
+                    <ul>
+                        <li>Privacy</li>
+                        <li>Security</li>
+                        <li>Terms</li>
+                        <li>Sitemap</li>
+                    </ul>
+                </div>
+
+                <div class="footer-links">
+                    <h6 class="footer-title">Social Links</h6>
+                    <div class="socials">
+                        <ul>
+                            <li><i class="fa fa-linkedin"></i></li>
+                            <li><i class="fa fa-instagram"></i></li>
+                            <li><i class="fa fa-twitter"></i></li>
+                            <li><i class="fa fa-youtube"></i></li>
+                            <li><i class="fa fa-facebook"></i></li>
+                        </ul>
+                    </div>
+                    <div class="buttons">
+                        <img src="https://b.zmtcdn.com/data/webuikit/23e930757c3df49840c482a8638bf5c31556001144.png" />
+                        <img src="https://b.zmtcdn.com/data/webuikit/9f0c85a5e33adb783fa0aef667075f9e1556003622.png" />
+                    </div>
+                </div>
+            </section>
+
+            <hr />
+            <section class="end">
+                By continuing past this page, you agree to our Terms of Service, Cookie Policy, Privacy Policy and Content Policies. All trademarks are properties of their respective owners. 2008-2023 © Zomato™ Ltd. All rights reserved.
+            </section>
+        </div>
+    </footer>
+
+    <script src="https://unpkg.com/feather-icons"></script>
+    <script>
+        feather.replace();
+
+        let currentPage = 1;
+        const perPage = 9;
+
+        function fetchRestaurantList(page = 1) {
+            fetch(`/api/restaurants?page=${page}&per_page=${perPage}`)
+                .then(response => response.json())
+                .then(data => {
+                    const restaurantList = document.getElementById('restaurant-list');
+                    restaurantList.innerHTML = '';
+                    data.restaurants.forEach(restaurant => {
+                        restaurantList.innerHTML += `
+                            <div class="restaurant-card">
+                                <h3><a href="restaurant_detail.html?id=${restaurant['Restaurant ID']}">${restaurant['Restaurant Name']}</a></h3>
+                                <p>Address: ${restaurant.Address}</p>
+                                <p>City: ${restaurant.City}</p>
+                                <p>Rating: ${restaurant['Aggregate rating']}</p>
+                                <p>Cuisines: ${restaurant.Cuisines}</p>
+                            </div>
+                        `;
+                    });
+
+                    currentPage = data.currentPage;
+                    const totalPages = Math.ceil(data.totalPages); 
+                    document.getElementById('current-page').textContent = `Page ${currentPage} of ${totalPages}`;
+                    document.getElementById('prev-button').disabled = currentPage <= 1;
+                    document.getElementById('next-button').disabled = currentPage >= totalPages;
+                })
+                .catch(error => console.error('Error fetching restaurant list:', error));
+        }
+
+        function searchRestaurant() {
+            const restaurantId = document.getElementById('restaurant-id').value;
+            if (restaurantId) {
+                window.location.href = `restaurant_detail.html?id=${restaurantId}`;
+            }
+        }
+
+        fetchRestaurantList();  // Initial fetch to load the first page of restaurant list
+    </script>
+
+    
+</body>
+</html>
